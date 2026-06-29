@@ -1,0 +1,160 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-brand-blue-50: #f0f7ff;
+  --color-brand-blue-100: #e0f0fe;
+  --color-brand-blue-200: #bae2fd;
+  --color-brand-blue-300: #7dd0fc;
+  --color-brand-blue-400: #38bdf8;
+  --color-brand-blue-500: #0ea5e9;
+  --color-brand-blue-600: #0284c7;
+  --color-brand-blue-700: #0369a1;
+  --color-brand-blue-800: #075985;
+  --color-brand-blue-900: #0c4a6e;
+  --color-brand-blue-950: #082f49;
+
+  --color-brand-purple-50: #faf5ff;
+  --color-brand-purple-100: #f3e8ff;
+  --color-brand-purple-200: #e9d5ff;
+  --color-brand-purple-300: #d8b4fe;
+  --color-brand-purple-400: #c084fc;
+  --color-brand-purple-500: #a855f7;
+  --color-brand-purple-600: #9333ea;
+  --color-brand-purple-700: #7e22ce;
+  --color-brand-purple-800: #6b21a8;
+  --color-brand-purple-900: #581c87;
+  --color-brand-purple-950: #3b0764;
+
+  --color-brand-red-50: #fef2f2;
+  --color-brand-red-100: #fee2e2;
+  --color-brand-red-200: #fecaca;
+  --color-brand-red-300: #fca5a5;
+  --color-brand-red-400: #f87171;
+  --color-brand-red-500: #ef4444;
+  --color-brand-red-600: #dc2626;
+  --color-brand-red-700: #b91c1c;
+  --color-brand-red-800: #991b1b;
+  --color-brand-red-900: #7f1d1d;
+  --color-brand-red-950: #450a0a;
+
+  --color-brand-dark-50: #f6f6f7;
+  --color-brand-dark-100: #eef0f2;
+  --color-brand-dark-200: #d9dce1;
+  --color-brand-dark-300: #b7bec8;
+  --color-brand-dark-400: #8f9baa;
+  --color-brand-dark-500: #6e7e90;
+  --color-brand-dark-600: #556577;
+  --color-brand-dark-700: #465362;
+  --color-brand-dark-800: #3a4451;
+  --color-brand-dark-900: #111827;
+  --color-brand-dark-950: #030712;
+  
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-ping-slow: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-dark-950 text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-brand-purple-500 selection:text-white;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-brand-dark-950;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-brand-dark-800 rounded-full hover:bg-brand-dark-700 transition-colors;
+}
+
+/* Custom Utilities for SafeCircle */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover {
+  @apply transition-all duration-300 ease-out hover:border-brand-purple-500/40 hover:shadow-lg hover:shadow-brand-purple-500/5 hover:-translate-y-0.5;
+}
+
+.glass-card-blue {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(14, 165, 233, 0.03) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+}
+
+.glass-card-purple {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0.03) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+}
+
+.glass-card-red {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.04) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.05);
+}
+
+.gradient-text-blue-purple {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue-400 via-brand-purple-400 to-brand-purple-600;
+}
+
+.gradient-text-emergency {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-red-400 via-rose-500 to-orange-500;
+}
+
+.grid-bg {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Map pulse ring animation */
+@keyframes map-ping {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.map-ring {
+  animation: map-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Audio wave animation rules */
+.voice-bar {
+  animation: voice-bounce 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes voice-bounce {
+  10% {
+    transform: scaleY(0.3);
+  }
+  30% {
+    transform: scaleY(1.0);
+  }
+  60% {
+    transform: scaleY(0.5);
+  }
+  80% {
+    transform: scaleY(0.7);
+  }
+  100% {
+    transform: scaleY(0.2);
+  }
+}
