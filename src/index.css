@@ -37,17 +37,19 @@
   --color-brand-red-900: #7f1d1d;
   --color-brand-red-950: #450a0a;
 
-  --color-brand-dark-50: #f6f6f7;
-  --color-brand-dark-100: #eef0f2;
-  --color-brand-dark-200: #d9dce1;
-  --color-brand-dark-300: #b7bec8;
-  --color-brand-dark-400: #8f9baa;
-  --color-brand-dark-500: #6e7e90;
-  --color-brand-dark-600: #556577;
-  --color-brand-dark-700: #465362;
-  --color-brand-dark-800: #3a4451;
-  --color-brand-dark-900: #111827;
-  --color-brand-dark-950: #030712;
+  --color-brand-dark-50: #f5f8fd;
+  --color-brand-dark-100: #eaf0fa;
+  --color-brand-dark-200: #c9d4ea;
+  --color-brand-dark-300: #a0b0d3;
+  --color-brand-dark-400: #788ab6;
+  --color-brand-dark-500: #576790;
+  --color-brand-dark-600: #3f4c6e;
+  --color-brand-dark-700: #2b354e;
+  --color-brand-dark-800: #1d2538;
+  --color-brand-dark-900: #0f1423;
+  --color-brand-dark-950: #060913;
+  
+  --font-sans: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   
   --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-ping-slow: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
@@ -75,36 +77,39 @@
 
 /* Custom Utilities for SafeCircle */
 .glass-panel {
-  background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(10, 15, 30, 0.7) 0%, rgba(3, 7, 18, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
 .glass-panel-hover {
-  @apply transition-all duration-300 ease-out hover:border-brand-purple-500/40 hover:shadow-lg hover:shadow-brand-purple-500/5 hover:-translate-y-0.5;
+  @apply transition-all duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-brand-purple-500/30 hover:shadow-2xl hover:shadow-brand-purple-500/10 hover:-translate-y-1;
 }
 
 .glass-card-blue {
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(14, 165, 233, 0.03) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(14, 165, 233, 0.15);
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(14, 165, 233, 0.01) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  box-shadow: 0 4px 24px 0 rgba(14, 165, 233, 0.05);
 }
 
 .glass-card-purple {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0.03) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(168, 85, 247, 0.15);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(168, 85, 247, 0.01) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.12);
+  box-shadow: 0 4px 24px 0 rgba(168, 85, 247, 0.05);
 }
 
 .glass-card-red {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.04) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.05);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(239, 68, 68, 0.02) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(239, 68, 68, 0.08);
 }
 
 .gradient-text-blue-purple {

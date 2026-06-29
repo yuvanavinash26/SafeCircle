@@ -8,17 +8,17 @@ import {
   Radio, 
   Glasses, 
   Watch, 
-  Cpu, 
   Bot, 
   Flame, 
+  Cpu, 
+  FileText, 
   Network, 
-  FileText,
-  Lock,
-  ArrowRight,
-  Sparkles
+  Sparkles,
+  ArrowRight
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { motion } from 'framer-motion';
 
 export const FeaturesPage: React.FC = () => {
   const navigate = useNavigate();
@@ -98,51 +98,58 @@ export const FeaturesPage: React.FC = () => {
   ];
 
   return (
-    <div className="bg-brand-dark-950 text-slate-100 min-h-screen flex flex-col justify-between relative overflow-hidden grid-bg">
+    <div className="bg-[#050816] text-slate-100 min-h-screen flex flex-col justify-between relative overflow-hidden">
+      
+      {/* Decorative background grid and glow */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00d4ff05_1px,transparent_1px),linear-gradient(to_bottom,#00d4ff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-40" />
+      <div className="absolute top-[20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-cyan-500/5 blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[20%] right-[-10%] w-[450px] h-[450px] rounded-full bg-emerald-500/5 blur-[120px] pointer-events-none" />
+
+      {/* Glass Floating Navigation */}
       <Navbar />
 
-      {/* Decorative Orbs */}
-      <div className="absolute top-[20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-brand-blue-500/5 blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-[20%] right-[-10%] w-[450px] h-[450px] rounded-full bg-brand-purple-600/10 blur-[120px] pointer-events-none" />
-
       {/* Main Body */}
-      <main className="max-w-7xl mx-auto w-full px-6 pt-32 pb-20 relative z-10 text-left space-y-20">
+      <main className="max-w-7xl mx-auto w-full px-6 pt-36 pb-20 relative z-10 text-left space-y-20">
         
         {/* Page Header */}
         <div className="space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-blue-500/10 border border-brand-blue-500/20 text-xs font-bold text-brand-blue-400">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyan-500/5 border border-cyan-500/20 text-xs font-bold text-[#00D4FF]">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Developer Sandbox Available</span>
+            <span>Operational Nodal Architecture</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight">
             Features Suite
           </h1>
-          <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
-            SafeCircle AI offers a multi-layered ecosystem of defensive measures. Review active features and upcoming hardware conceptual integrations.
+          <p className="text-sm sm:text-base text-slate-400 leading-relaxed font-medium">
+            SafeCircle AI delivers a unified mesh of passive telemetry guards and automated emergency triggers. Learn about our active features and conceptual hardware blueprints.
           </p>
         </div>
 
         {/* Active Core Features Section */}
         <div className="space-y-8">
           <div>
-            <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#00FFB2]" />
               Active System Integrations
             </h2>
-            <p className="text-xs text-slate-500 mt-1">Ready for sandbox testing in the Dashboard Console.</p>
+            <p className="text-[10px] text-slate-500 font-mono mt-1">READY FOR DIRECT TESTING IN ACTIVE NODES CONSOLE</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {coreFeatures.map((feat, i) => (
-              <div key={i} className="p-6 rounded-2xl glass-panel border border-slate-800/80 flex flex-col justify-between space-y-4">
-                <div className="p-3 rounded-xl bg-brand-blue-500/10 border border-brand-blue-500/20 text-brand-blue-400 w-fit">
-                  <feat.icon className="w-6 h-6" />
+              <motion.div 
+                key={i} 
+                whileHover={{ y: -4 }}
+                className="p-6 rounded-[24px] bg-[#0B1023]/60 hover:bg-[#0B1023] border border-white/5 hover:border-cyan-500/30 flex flex-col justify-between space-y-4 shadow-lg transition-colors group"
+              >
+                <div className="p-3 rounded-2xl bg-[#050816] border border-cyan-500/20 text-[#00D4FF] group-hover:border-emerald-500/30 group-hover:text-[#00FFB2] w-fit transition-colors">
+                  <feat.icon className="w-5 h-5" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-bold text-base text-white">{feat.title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">{feat.description}</p>
+                  <h3 className="font-bold text-sm text-white group-hover:text-[#00D4FF] transition-colors">{feat.title}</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed font-medium">{feat.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -150,42 +157,50 @@ export const FeaturesPage: React.FC = () => {
         {/* Future Integrations Section */}
         <div className="space-y-8">
           <div>
-            <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-brand-purple-500 animate-pulse" />
-              Future Roadmap Integrations
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+              Future Roadmap Concepts
             </h2>
-            <p className="text-xs text-slate-500 mt-1">Concept drafts and hardware blueprints under development.</p>
+            <p className="text-[10px] text-slate-500 font-mono mt-1">DRAFT BLUEPRINTS & HARDWARE PROTOTYPING SCHEMES</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {futureFeatures.map((feat, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-brand-dark-900/40 border border-slate-900 flex flex-col justify-between space-y-4 relative group hover:border-brand-purple-500/20 transition-colors">
-                <span className="absolute top-4 right-4 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded bg-slate-950 text-slate-500 border border-slate-800">
+              <motion.div 
+                key={i} 
+                whileHover={{ y: -4 }}
+                className="p-6 rounded-[24px] bg-[#0B1023]/30 hover:bg-[#0B1023]/60 border border-white/5 hover:border-cyan-500/20 flex flex-col justify-between space-y-4 relative group transition-colors shadow-md"
+              >
+                <span className="absolute top-4 right-4 text-[7px] font-black uppercase px-2 py-0.5 rounded bg-[#050816] text-[#00FFB2] border border-emerald-500/20">
                   {feat.badge}
                 </span>
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-850 text-slate-500 group-hover:text-brand-purple-400 group-hover:bg-brand-purple-500/5 transition-all w-fit">
-                  <feat.icon className="w-6 h-6" />
+                <div className="p-3 rounded-2xl bg-[#050816]/80 border border-white/5 text-slate-500 group-hover:text-[#00D4FF] group-hover:border-cyan-500/30 transition-all w-fit">
+                  <feat.icon className="w-5 h-5" />
                 </div>
-                <div className="space-y-1">
-                  <h3 className="font-bold text-sm text-slate-300 group-hover:text-white transition-colors">{feat.title}</h3>
-                  <p className="text-[11px] text-slate-500 leading-relaxed">{feat.description}</p>
+                <div className="space-y-1 text-left">
+                  <h3 className="font-bold text-xs text-slate-300 group-hover:text-white transition-colors uppercase tracking-wider">{feat.title}</h3>
+                  <p className="text-[11px] text-slate-500 leading-relaxed font-medium mt-1">{feat.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="p-8 rounded-3xl bg-gradient-to-r from-brand-blue-900/40 to-brand-purple-900/40 border border-brand-purple-500/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        {/* Action callout panel */}
+        <div className="p-8 rounded-[24px] bg-gradient-to-r from-cyan-500/5 to-emerald-500/5 border border-cyan-500/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl relative overflow-hidden">
+          {/* Subtle inside glow */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-xl pointer-events-none" />
+
           <div className="space-y-1">
-            <h3 className="font-bold text-lg text-white">Ready to test the live simulator?</h3>
-            <p className="text-xs text-slate-400 max-w-xl">
+            <h3 className="font-bold text-base text-white">Ready to test the live simulator?</h3>
+            <p className="text-xs text-slate-400 max-w-xl font-medium">
               You can trigger fake calls, test active accelerometer impact telemetry, verify geofence alerts, and preview safety score indicators right now.
             </p>
           </div>
+          
           <button 
             onClick={() => navigate('/dashboard/sos')}
-            className="px-6 py-3 font-bold text-xs rounded-xl bg-white hover:bg-slate-100 text-brand-dark-950 transition-all flex items-center gap-1.5 shrink-0"
+            className="px-6 py-3.5 font-bold text-xs uppercase tracking-widest rounded-full bg-[#00D4FF] hover:bg-[#00e1ff] text-slate-950 hover:shadow-[0_0_15px_rgba(0,212,255,0.3)] transition-all flex items-center gap-1.5 shrink-0 border border-[#00D4FF] cursor-pointer"
           >
             <span>Launch Dashboard</span>
             <ArrowRight className="w-4 h-4" />
@@ -198,4 +213,5 @@ export const FeaturesPage: React.FC = () => {
     </div>
   );
 };
+
 export default FeaturesPage;

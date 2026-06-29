@@ -247,7 +247,18 @@ export const DashboardLayout: React.FC = () => {
 
         {/* Content Outlet */}
         <main className="flex-1 p-6 lg:p-8 max-w-7xl mx-auto w-full relative">
-          <Outlet />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="h-full w-full"
+            >
+              <Outlet />
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
 
