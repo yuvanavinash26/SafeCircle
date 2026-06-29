@@ -158,3 +158,15 @@
     transform: scaleY(0.2);
   }
 }
+
+/* Animated map route line */
+@keyframes route-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.route-path {
+  stroke-dasharray: 8, 6;
+  animation: route-flow 1.2s linear infinite;
+}

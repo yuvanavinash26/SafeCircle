@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Layout
 import { DashboardLayout } from './layout/DashboardLayout';
@@ -11,21 +12,32 @@ import { About } from './pages/About';
 import { NotFound } from './pages/NotFound';
 
 // Dashboard Pages
+import { Dashboard } from './pages/dashboard/Dashboard';
 import { SOSDashboard } from './pages/dashboard/SOSDashboard';
 import { LiveMap } from './pages/dashboard/LiveMap';
 import { SafeRoute } from './pages/dashboard/SafeRoute';
 import { EmergencyContacts } from './pages/dashboard/EmergencyContacts';
-import { FakeCall } from './pages/dashboard/FakeCall';
+import { FakeCallGenerator } from './pages/dashboard/FakeCallGenerator';
 import { VoiceAssistant } from './pages/dashboard/VoiceAssistant';
-import { AIPanicDetection } from './pages/dashboard/AIPanicDetection';
+import { PanicDetection } from './pages/dashboard/PanicDetection';
 import { SafetyAnalytics } from './pages/dashboard/SafetyAnalytics';
 import { Profile } from './pages/dashboard/Profile';
 import { SettingsPage } from './pages/dashboard/Settings';
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
         {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/features" element={<FeaturesPage />} />
@@ -33,15 +45,14 @@ const App: React.FC = () => {
 
         {/* Dashboard Console Routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>
-          {/* Default redirect to SOS */}
-          <Route index element={<Navigate to="/dashboard/sos" replace />} />
+          <Route index element={<Dashboard />} />
           <Route path="sos" element={<SOSDashboard />} />
           <Route path="map" element={<LiveMap />} />
           <Route path="route" element={<SafeRoute />} />
           <Route path="contacts" element={<EmergencyContacts />} />
-          <Route path="fake-call" element={<FakeCall />} />
+          <Route path="fake-call" element={<FakeCallGenerator />} />
           <Route path="voice" element={<VoiceAssistant />} />
-          <Route path="panic" element={<AIPanicDetection />} />
+          <Route path="panic" element={<PanicDetection />} />
           <Route path="analytics" element={<SafetyAnalytics />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<SettingsPage />} />
@@ -51,6 +62,7 @@ const App: React.FC = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 

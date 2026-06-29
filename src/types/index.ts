@@ -43,3 +43,49 @@ export interface EmergencyRecord {
   type: 'SOS Button' | 'Voice Trigger' | 'Panic Detection' | 'Geofence Exit';
   status: 'Resolved' | 'Dispatched' | 'Active';
 }
+
+export interface SOSRequest {
+  latitude: number;
+  longitude: number;
+  timestamp: string;
+  accuracy?: number;
+}
+
+export interface SOSResponse {
+  success: boolean;
+  incidentId: string;
+  status: 'Active' | 'Dispatched' | 'Resolved';
+  message: string;
+  timestamp: string;
+}
+
+export interface SafeRouteQuery {
+  start: string;
+  destination: string;
+  startCoords?: [number, number];
+  destCoords?: [number, number];
+}
+
+export interface SafeRouteResult {
+  id: string;
+  name: string;
+  distance: string;
+  duration: string;
+  safetyScore: number;
+  lightsRating: 'Excellent' | 'Moderate' | 'Poor';
+  crowdLevel: 'high' | 'medium' | 'low';
+  alertsCount: number;
+  waypoints: [number, number][];
+}
+
+export interface PanicTelemetry {
+  heartRate: number;
+  gForce: number;
+  deviceState: 'Stable' | 'Potential Fall' | 'Impact Alert';
+  voiceIntensity: number;
+  stressLevel: number;
+  confidenceScore: number;
+  dominantEmotion: string;
+  isBreach: boolean;
+}
+

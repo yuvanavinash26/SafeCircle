@@ -56,7 +56,7 @@ export const MapPlaceholder: React.FC<MapPlaceholderProps> = ({
           fill="none" 
           stroke="url(#routeGradient)" 
           strokeWidth="3" 
-          strokeDasharray="6,4"
+          className="route-path"
         />
         <defs>
           <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="100%">

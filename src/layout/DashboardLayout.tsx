@@ -18,7 +18,8 @@ import {
   AlertTriangle,
   Info,
   PhoneCall,
-  InfoIcon
+  InfoIcon,
+  LayoutGrid
 } from 'lucide-react';
 import { mockNotifications } from '../mock/dummyData';
 
@@ -30,6 +31,7 @@ export const DashboardLayout: React.FC = () => {
   const location = useLocation();
 
   const menuItems = [
+    { name: 'Overview Console', path: '/dashboard', icon: LayoutGrid, color: 'text-brand-purple-400' },
     { name: 'SOS Dashboard', path: '/dashboard/sos', icon: Shield, color: 'text-brand-red-500' },
     { name: 'Live Map', path: '/dashboard/map', icon: MapPin, color: 'text-brand-blue-500' },
     { name: 'Safe Route Planner', path: '/dashboard/route', icon: Route, color: 'text-teal-400' },
