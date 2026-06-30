@@ -11,6 +11,56 @@ export const FakeCall: React.FC = () => {
   const [isRinging, setIsRinging] = useState(false);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
+  const [isCallActive, setIsCallActive] = useState(false);
+  const [callDuration, setCallDuration] = useState(0);
+
+  useEffect(() => {
+    let interval: any;
+    if (isCallActive) {
+      interval = setInterval(() => {
+        setCallDuration(prev => prev + 1);
+      }, 1000);
+    } else {
+      setCallDuration(0);
+    }
+    return () => clearInterval(interval);
+  }, [isCallActive]);
+
+  const handleAcceptCall = () => {
+    setIsRinging(false);
+    setIsCallActive(true);
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(
+        `Hello beta! Where are you right now? Listen carefully, I am sending our car to your exact GPS coordinates right now. Stay on line with me and do not hang up.`
+      );
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    const toastId = `toast-${Date.now()}`;
+    setToasts(prev => [...prev, {
+      id: toastId,
+      type: 'success',
+      message: `Call Connected with ${callerName}. Playing emergency audio prompt.`
+    }]);
+  };
+
+  const handleEndCall = () => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsCallActive(false);
+    const toastId = `toast-${Date.now()}`;
+    setToasts(prev => [...prev, {
+      id: toastId,
+      type: 'info',
+      message: 'Call disconnected.'
+    }]);
+  };
+
   useEffect(() => {
     if (countdown === null) return;
     if (countdown === 0) {
@@ -130,7 +180,32 @@ export const FakeCall: React.FC = () => {
           
           <div className="absolute inset-0 bg-slate-950/20 grid-bg opacity-30 pointer-events-none" />
 
-          {isRinging ? (
+          {isCallActive ? (
+            <>
+              <div className="absolute inset-0 bg-emerald-500/5 animate-pulse" />
+              <div className="space-y-1 relative z-10 pt-4">
+                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest animate-pulse">Connected • Active Call</span>
+                <h4 className="text-xl font-black text-white">{callerName}</h4>
+                <p className="text-xs font-mono text-emerald-300">
+                  00:{callDuration < 10 ? `0${callDuration}` : callDuration}
+                </p>
+              </div>
+
+              <div className="w-20 h-20 rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-300 relative z-10">
+                <Phone className="w-8 h-8 animate-pulse" />
+              </div>
+
+              <div className="w-full relative z-10 pb-2">
+                <button 
+                  onClick={handleEndCall}
+                  className="w-full py-2.5 rounded-xl bg-brand-red-600 hover:bg-brand-red-500 text-white font-bold text-xs uppercase flex items-center gap-2 justify-center cursor-pointer shadow-lg shadow-brand-red-600/30"
+                >
+                  <PhoneOff className="w-4 h-4" />
+                  End Call
+                </button>
+              </div>
+            </>
+          ) : isRinging ? (
             <>
               {/* Ringing animations */}
               <div className="absolute inset-0 bg-brand-purple-500/5 animate-pulse" />
@@ -157,7 +232,7 @@ export const FakeCall: React.FC = () => {
                   Decline
                 </button>
                 <button 
-                  onClick={() => { alert('Fake connection established. Act of audio prompt begins!'); setIsRinging(false); }}
+                  onClick={handleAcceptCall}
                   className="flex-1 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] uppercase flex items-center gap-1 justify-center cursor-pointer"
                 >
                   <UserCheck className="w-3.5 h-3.5" />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ContactCard from '../../components/ContactCard';
 import Modal from '../../components/Modal';
 import ToastPlaceholder from '../../components/ToastPlaceholder';
@@ -6,6 +6,7 @@ import type { ToastMessage } from '../../components/ToastPlaceholder';
 import { mockContacts } from '../../mock/dummyData';
 import type { Contact } from '../../types';
 import { UserPlus, Star, ShieldAlert } from 'lucide-react';
+import { apiService } from '../../services/api';
 
 export const EmergencyContacts: React.FC = () => {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -18,6 +19,16 @@ export const EmergencyContacts: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [isEmergency, setIsEmergency] = useState(true);
 
+  useEffect(() => {
+    apiService.getContacts()
+      .then(data => {
+        if (data && data.length > 0) {
+          setContacts(data);
+        }
+      })
+      .catch(err => console.log('Using local contacts fallback:', err));
+  }, []);
+
   const handleDial = (phoneNumber: string) => {
     // Simulated Dial
     const toastId = `toast-${Date.now()}`;
@@ -29,7 +40,12 @@ export const EmergencyContacts: React.FC = () => {
     setToasts(prev => [...prev, newToast]);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
+    try {
+      await apiService.deleteContact(id);
+    } catch (err) {
+      console.log('API delete failed or offline');
+    }
     setContacts(prev => prev.filter(c => c.id !== id));
     const toastId = `toast-${Date.now()}`;
     const newToast: ToastMessage = {
@@ -40,19 +56,28 @@ export const EmergencyContacts: React.FC = () => {
     setToasts(prev => [...prev, newToast]);
   };
 
-  const handleAddContact = (e: React.FormEvent) => {
+  const handleAddContact = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) return;
 
-    const newContact: Contact = {
-      id: `c-${Date.now()}`,
-      name,
-      relationship,
-      phone,
-      isEmergency
-    };
-
-    setContacts(prev => [...prev, newContact]);
+    try {
+      const savedContact = await apiService.addContact({
+        name,
+        relationship,
+        phone,
+        isEmergency
+      });
+      setContacts(prev => [...prev, savedContact]);
+    } catch (err) {
+      const fallbackContact: Contact = {
+        id: `c-${Date.now()}`,
+        name,
+        relationship,
+        phone,
+        isEmergency
+      };
+      setContacts(prev => [...prev, fallbackContact]);
+    }
     setIsModalOpen(false);
 
     // Reset Form

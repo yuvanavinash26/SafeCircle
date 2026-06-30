@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MapPlaceholder from '../../components/MapPlaceholder';
 import LocationCard from '../../components/LocationCard';
 import { mockLocations } from '../../mock/dummyData';
 import type { Location } from '../../types';
 import { Search, SlidersHorizontal, MapPin, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { apiService } from '../../services/api';
 
 export const LiveMap: React.FC = () => {
   const [locations, setLocations] = useState<Location[]>(mockLocations);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'safe' | 'warning' | 'danger'>('all');
   const [selectedLoc, setSelectedLoc] = useState<Location | null>(mockLocations[0] || null);
+
+  useEffect(() => {
+    apiService.getLocations()
+      .then(data => {
+        if (data && data.length > 0) {
+          setLocations(data);
+          setSelectedLoc(data[0]);
+        }
+      })
+      .catch(err => console.log('Using local locations fallback:', err));
+  }, []);
 
   const handleSelectLocation = (loc: Location) => {
     setSelectedLoc(loc);

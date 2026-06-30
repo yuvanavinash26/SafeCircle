@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EmergencyButton from '../../components/EmergencyButton';
 import SOSCard from '../../components/SOSCard';
 import Timeline from '../../components/Timeline';
@@ -8,16 +8,33 @@ import type { ToastMessage } from '../../components/ToastPlaceholder';
 import { mockEmergencyHistory } from '../../mock/dummyData';
 import type { EmergencyRecord } from '../../types';
 import { Shield, Clock, HeartHandshake, AlertCircle } from 'lucide-react';
+import { apiService } from '../../services/api';
 
 export const SOSDashboard: React.FC = () => {
   const [history, setHistory] = useState<EmergencyRecord[]>(mockEmergencyHistory);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  const triggerSOS = () => {
+  useEffect(() => {
+    apiService.getEmergencyLogs()
+      .then(data => {
+        if (data && data.length > 0) {
+          setHistory(data);
+        }
+      })
+      .catch(err => console.log('Using local SOS logs fallback:', err));
+  }, []);
+
+  const triggerSOS = async () => {
+    try {
+      await apiService.triggerSOS();
+    } catch (err) {
+      console.log('API trigger offline or failed');
+    }
+
     const newRecord: EmergencyRecord = {
       id: `e-${Date.now()}`,
-      contactName: 'Aarav Sharma & Priya Sharma (Broadcasting)',
-      phone: '+91 Multiple',
+      contactName: 'Circle Guardians & Police Relay',
+      phone: '+91 Broadcast Active',
       time: new Date().toISOString().replace('T', ' ').substring(0, 16),
       type: 'SOS Button',
       status: 'Active'
@@ -35,7 +52,12 @@ export const SOSDashboard: React.FC = () => {
     setToasts(prev => [...prev, newToast]);
   };
 
-  const handleResolve = (id: string) => {
+  const handleResolve = async (id: string) => {
+    try {
+      await apiService.resolveSOS(id);
+    } catch (err) {
+      console.log('API resolve offline or failed');
+    }
     setHistory(prev => prev.map(rec => rec.id === id ? { ...rec, status: 'Resolved' } : rec));
     
     // Add toast
