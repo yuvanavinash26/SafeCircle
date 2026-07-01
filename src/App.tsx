@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 
 // Layout
 import { DashboardLayout } from './layout/DashboardLayout';
@@ -50,6 +51,7 @@ const App: React.FC = () => {
         {/* 404 Fallback */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 };
